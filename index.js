@@ -8,17 +8,33 @@ loadCountries();
 const displayCountries = (countries) =>{
     const countryList = document.getElementById('countries');
     countries.forEach(country => {
-        console.log(country.name);
+        // console.log(country.name);
         const div = document.createElement('div');
-        const h3 = document.createElement('h3');
-        h3.innerHTML = country.name.official;
-        div.appendChild(h3);
-        const p = document.createElement('p');
-        p.innerHTML = `Capital: ${country.capital}</br>
-        Region:${country.region}</br>
-        Flag: ${country.flags.png}</br>
-        Continent: ${country.continents}`;
-        div.appendChild(p);
+        div.classList.add('country');
+        div.innerHTML = `
+        <h3>${country.name.common}</h3>
+        <p>Capital: ${country.capital}</br>
+        Continent: ${country.continents}</p>
+        <button onclick = "loadCountryByName('${country.name.common}')";>see more</button>
+        `;
         countryList.appendChild(div);
     })
 }
+
+const loadCountryByName = (name) =>{
+    const url =`https://restcountries.com/v3.1/name/${name}`;
+    fetch(url)
+    .then(res => res.json())
+    .then(data => displayCountryDetails(data[0])) 
+}
+const displayCountryDetails = country =>{
+    console.log(country);
+    const countryDiv = document.getElementById('country-details');
+    countryDiv.innerHTML = `
+    <h5>Official Name: ${country.name.official}</h>
+    <p>Border: ${country.borders}</p>
+    <p>Time zone: ${country.timezones}</p>
+    <p>Region: ${country.region}</p>
+    <img width="100px" src="${country.flags.svg}">
+    `;
+};
