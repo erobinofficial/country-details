@@ -35,6 +35,7 @@ const displayCountryDetails = country =>{
     <p>Border: ${country.borders}</p>
     <p>Time zone: ${country.timezones}</p>
     <p>Region: ${country.region}</p>
+    <p>Population: ${country.population}</p>
     <img width="100px" src="${country.flags.svg}">
     `;
 };
